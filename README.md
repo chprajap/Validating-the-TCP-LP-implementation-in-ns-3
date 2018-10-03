@@ -6,6 +6,17 @@ Validate the ns-3 implementation of TCP Low Priority in DCE
 
 This Validating-the-TCP-LP-implementation-in-ns-3 repository is a joint Computer Networks project.
 
+**Description**
+
+TCP Low Priority (TCP-LP) is a Less than Best Effort TCP. This category of TCPs are used to ensure
+that bandwidth hungry large flows do not saturate the bandwidth and starve small delay sensitive flows.
+In this project, the aim is to validate ns-3 TCP-LP implementation by comparing the results obtained from 
+it to those obtained by simulating Linux TCP-LP  
+
+**Required Experience**
+
+C and C++
+
 **HOW TO CLONE:**
 
 Follow the steps given below: 
