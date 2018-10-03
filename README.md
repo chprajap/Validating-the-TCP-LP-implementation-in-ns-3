@@ -15,7 +15,7 @@ it to those obtained by simulating Linux TCP-LP
 
 **Required Experience**
 
-C and C++
+- C and C++
 
 **HOW TO CLONE:**
 
