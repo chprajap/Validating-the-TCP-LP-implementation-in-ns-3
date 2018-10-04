@@ -11,11 +11,7 @@ This Validating-the-TCP-LP-implementation-in-ns-3 repository is a joint Computer
 TCP Low Priority (TCP-LP) is a Less than Best Effort TCP. This category of TCPs are used to ensure
 that bandwidth hungry large flows do not saturate the bandwidth and starve small delay sensitive flows.
 In this project, the aim is to validate ns-3 TCP-LP implementation by comparing the results obtained from 
-<<<<<<< HEAD
-it to those obtained by simulating Linux TCP-LP.  
-=======
 it to those obtained by simulating Linux TCP-LP. 
->>>>>>> c8a389ef555a50e568578ab53743bb50e9a80316
 
 **Required Experience**
 
