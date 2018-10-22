@@ -19,9 +19,10 @@ it to those obtained by simulating Linux TCP-LP.
 
 **References**
 
-- Direct Code Execution (Link: https://www.nsnam.org/overview/projects/direct-co- xecution/​) 
-- Linux kernel code (Link: https://elixir.bootlin.com/linux/v4.4/source/net/ipv4/tcp_hybla.c​)
-- ns-3 code for TCP Hybla (Path: ns-3.xx/src/internet/model/tcp-hybla.{h, cc}) 
+- Direct Code Execution (Link: https://www.nsnam.org/overview/projects/direct-code-execution/​) 
+- Linux kernel code (Link: ​https://elixir.bootlin.com/linux/v4.4/source/net/ipv4/tcp_lp.c​) 
+- TCP LP Paper (Link: ​https://ieeexplore.ieee.org/abstract/document/1209192/​) 
+- ns-3 code for TCP-LP (Path: ns-3.xx/src/internet/model/tcp-lp.{h, cc}) 
 
 **HOW TO CLONE:**
 
