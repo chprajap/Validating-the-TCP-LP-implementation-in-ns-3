@@ -10,16 +10,16 @@
 - now run the any(e.g. dumbbell) topology consisting of 5 senders, 2 routers and 5 receivers.
 - this particular file will contain dumbbell topology and we will run for it.
 - download the source code for dumbbell topology provided in dce-gfc-dumbbell.cc file in this repo.
-- Now add dce-gfc-dumbbell.cc file in dce/source/ns3-dce/example folder
+- Now add dce-gfc-dumbbell.cc file in dce/source/ns-3-dce/example folder
 - change the name of tcp according your tcp
 - change the variable transport_prot and linux_prot as per your tcp which can be found in this file only while writng cmd.add() below these 2 variable's declarations.
 - transport_prot for ns3's tcp name (For me TcpLp)
 - linux_prot for linux's tcp name (For me lp)
-- Now open the wcript file in the folder dce/source/ns3-dce
+- Now open the wcript file in the folder dce/source/ns-3-dce
 - Now whenever we add new topology and want results for it we have to add it in the wscript file
 - Now add three lines in wcript file as shown below.
 - Now open terminal.
-- cd dce/source/ns3-dce
+- cd dce/source/ns-3-dce
 - now run the command ./waf --run "dce-gfc-dumbbell --stack=linux"
 - this will produce results for running this topology on linux stack.
 
@@ -33,39 +33,39 @@
 - it will be more than around 1 gb.
 - so don't keep more such folders as & when you don't need them delete them and save only needed graphs.
 - Now there will 3 more folders & 3 files in that folder(results/gfc-dumbbell/01-04-2018-04-00-45)
-- files will be config, queue_size.plotme and stats file.
-- you have to plot this queue_size.plotme file
-- queue_size.plotme will contain the values of queue size at particular time for router 1 as ther won't be any queue bulid up for router 2.
-- so ther will be 2 values time,queue_size
+- files will be config.txt, queue-size.plotme and queueStats.txt file.
+- you have to plot this queue-size.plotme file.
+- queue-size.plotme will contain the values of queue size at particular time for router 1 as ther won't be any queue bulid up for router 2.
+- so ther will be 2 values time and queue-size.
 - for linux stack, for first 10 seconds you will get 0 as queue size as it takes that much time to build up. So you will positive values for queue size from 10 seconds onward.
-- now to plot the queue_size.plotme file copy the gnuplotscriptQ file from pcap folder and paste it outside the pcap folder i.e. in the folder containing queue_size.plotme file (for e.g. results/gfc-dumbbell/01-04-2018-04-00-45)
-- gnuplotscriptQ file will contain code for ploting the queue_size.plotme file
+- now to plot the queue-size.plotme file copy the gnuplotscriptQ file from pcap folder and paste it outside the pcap folder i.e. in the folder containing queue-size.plotme file (for e.g. results/gfc-dumbbell/01-04-2018-04-00-45)
+- gnuplotscriptQ file will contain code for ploting the queue-size.plotme file
 - change the value in gnuplotscriptQ file for xRange from [0-20] instead of [2-10] and ylim as [0-700] instead of [0-200].
-- also change the last line i.e. queue_size-1.plotme to queue_size.plotme
+- also change the last line i.e. queue-size-1.plotme to queue-size.plotme
 - now run the command gnuplot gnuplotscript
-- the queue_size.png will be generated that will contain the graph.
+- the queue-size.png will be generated that will contain the graph.
 
 # result for senders
-- Now download gfc-dumbbell-parse-command_v2.py & gfc-dumbbell-versus.py file from this repo.
-- Now copy both files into dce/source/ns3-dce/utils folder
-- Here gfc-dumbbell-parse-command_v2.py contains code to parse the data from files2,..,files6.
-- Here gfc-dumbbell-versus.py contains code for plotting that parsed data.
-- Now run the command python gfc-dumbbell-parse-command_v2.py
+- Now download gfc_dumbbell_parse_cwnd_command_v2.py & gfc_dumbbell_versus.py file from this repo.
+- Now copy both files into dce/source/ns-3-dce/utils folder
+- Here gfc_dumbbell_parse_cwnd_command_v2.py contains code to parse the data from files2,..,files6.
+- Here gfc_dumbbell_versus.py contains code for plotting that parsed data.
+- Now run the command python gfc_dumbbell_parse_cwnd_command_v2.py.
 - After this inside results/gfc-dumbbell folder cwnd_data folder will have been created
 - That will contain 2.txt,3.txt,..,6.txt files that is the value of time and cwnd for those senders.
-- Now plot this data of 5 files by using gfc-dumbbell-versus.py.
+- Now plot this data of 5 files by using gfc_dumbbell_versus.py.
 - You will get 5 graphs i.e. cwnd-time graphs for all 5 senders.
 - Well done you are done with linux stack
 
 # For ns3 stack
 - Now run the results for ns3 stack using command
 - ./waf run "dce-gfc-dumbbell --stack=ns3"
-- follow the same steps for getting results for routers
+- follow the same steps for getting results for routers.
 - if you get queue_size as 0 for all time from 0-10 then there might be bug in ns3 code like prr is not enabled or maybe something else.
 - for prr recovery add 1 line into dce-gfc-dumbbell.cc file
 - cmd.addValue("ns3::prrrecovery").
 - now rerun and see the results. If still you are getting 0 then try increasing cwnd value from 1 to 10 or figure out what would have gone worng in ns3 code.
-- read the ns3's source code from going into folder dce/source/ns3-dev/src/internet/module/tcplp.cc like file according to your tcp for me it was tcplp.cc
+- read the ns3's source code from going into folder dce/source/ns-3-dev/src/internet/model/tcp-lp.cc like file according to your tcp for me it was tcp-lp.cc
 - so read that code and also linux's implementation of that tcp and figure out the error
 
 # For ns3 stack (resutls for senders)

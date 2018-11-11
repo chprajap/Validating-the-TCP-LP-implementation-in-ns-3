@@ -22,7 +22,7 @@ it to those obtained by simulating Linux TCP-LP.
 - Direct Code Execution (Link: https://www.nsnam.org/overview/projects/direct-code-execution/​) 
 - Linux kernel code (Link: ​https://elixir.bootlin.com/linux/v4.4/source/net/ipv4/tcp_lp.c​) 
 - TCP LP Paper (Link: ​https://ieeexplore.ieee.org/abstract/document/1209192/​) 
-- ns-3 code for TCP-LP (Path: ns-3.xx/src/internet/model/tcp-lp.{h, cc}) 
+- ns-3 code for TCP-LP (Link: ​https://www.nsnam.org/doxygen/tcp-lp-test_8cc_source.html​)  
 
 **HOW TO CLONE:**
 

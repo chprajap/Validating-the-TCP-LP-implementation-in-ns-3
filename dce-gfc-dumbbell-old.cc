@@ -237,8 +237,6 @@ int main (int argc, char *argv[])
 
   if (stack == "ns3")
     {
-    	Config::SetDefault ("ns3::TcpL4Protocol::RecoveryType",
-                      TypeIdValue (TypeId::LookupByName ("ns3::TcpPrrRecovery")));
       if (transport_prot.compare ("ns3::TcpWestwoodPlus") == 0)
         {
           // TcpWestwoodPlus is not an actual TypeId name; we need TcpWestwood here
@@ -256,44 +254,44 @@ int main (int argc, char *argv[])
 
   NodeContainer leftNodes, rightNodes, routers;
   routers.Create (2);
-  leftNodes.Create (2);
-  rightNodes.Create (2);
+  leftNodes.Create (5);
+  rightNodes.Create (5);
 
   // Create the point-to-point link helpers
   PointToPointHelper pointToPointRouter;
-  pointToPointRouter.SetDeviceAttribute  ("DataRate", StringValue ("1Mbps"));
-  pointToPointRouter.SetChannelAttribute ("Delay", StringValue ("50ms"));
+  pointToPointRouter.SetDeviceAttribute  ("DataRate", StringValue ("150Mbps"));
+  pointToPointRouter.SetChannelAttribute ("Delay", StringValue ("0.00075ms"));
   NetDeviceContainer r1r2ND = pointToPointRouter.Install (routers.Get (0), routers.Get (1));
 
   std::vector <NetDeviceContainer> leftToRouter;
   std::vector <NetDeviceContainer> routerToRight;
   PointToPointHelper pointToPointLeaf;
-  pointToPointLeaf.SetDeviceAttribute    ("DataRate", StringValue ("10Mbps"));
+  pointToPointLeaf.SetDeviceAttribute    ("DataRate", StringValue ("150Mbps"));
 
   // Node 1
-  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("5ms"));
+  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("0.00025ms"));
   leftToRouter.push_back (pointToPointLeaf.Install (leftNodes.Get (0), routers.Get (0)));
   routerToRight.push_back (pointToPointLeaf.Install (routers.Get (1), rightNodes.Get (0)));
 
   // Node 2
-  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("5ms"));
+  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("0.0001ms"));
   leftToRouter.push_back (pointToPointLeaf.Install (leftNodes.Get (1), routers.Get (0)));
   routerToRight.push_back (pointToPointLeaf.Install (routers.Get (1), rightNodes.Get (1)));
 
-/*  // Node 3
-  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("5ms"));
+  // Node 3
+  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("0.00005ms"));
   leftToRouter.push_back (pointToPointLeaf.Install (leftNodes.Get (2), routers.Get (0)));
   routerToRight.push_back (pointToPointLeaf.Install (routers.Get (1), rightNodes.Get (2)));
 
   // Node 4
-  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("5ms"));
+  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("0.000025ms"));
   leftToRouter.push_back (pointToPointLeaf.Install (leftNodes.Get (3), routers.Get (0)));
   routerToRight.push_back (pointToPointLeaf.Install (routers.Get (1), rightNodes.Get (3)));
 
   // Node 5
-  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("5ms"));
+  pointToPointLeaf.SetChannelAttribute   ("Delay", StringValue ("0.000005ms"));
   leftToRouter.push_back (pointToPointLeaf.Install (leftNodes.Get (4), routers.Get (0)));
-  routerToRight.push_back (pointToPointLeaf.Install (routers.Get (1), rightNodes.Get (4)));*/
+  routerToRight.push_back (pointToPointLeaf.Install (routers.Get (1), rightNodes.Get (4)));
 
   DceManagerHelper dceManager;
   LinuxStackHelper linuxStack;
@@ -323,23 +321,23 @@ int main (int argc, char *argv[])
   ipAddresses.NewNetwork ();
   leftToRouterIPAddress.push_back (ipAddresses.Assign (leftToRouter [1]));
   ipAddresses.NewNetwork ();
-/*  leftToRouterIPAddress.push_back (ipAddresses.Assign (leftToRouter [2]));
+  leftToRouterIPAddress.push_back (ipAddresses.Assign (leftToRouter [2]));
   ipAddresses.NewNetwork ();
   leftToRouterIPAddress.push_back (ipAddresses.Assign (leftToRouter [3]));
   ipAddresses.NewNetwork ();
   leftToRouterIPAddress.push_back (ipAddresses.Assign (leftToRouter [4]));
   ipAddresses.NewNetwork ();
-*/
+
   std::vector <Ipv4InterfaceContainer> routerToRightIPAddress;
   routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [0]));
   ipAddresses.NewNetwork ();
   routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [1]));
   ipAddresses.NewNetwork ();
-/*  routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [2]));
+  routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [2]));
   ipAddresses.NewNetwork ();
   routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [3]));
   ipAddresses.NewNetwork ();
-  routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [4]));*/
+  routerToRightIPAddress.push_back (ipAddresses.Assign (routerToRight [4]));
 
   if (stack == "linux")
     {
@@ -368,21 +366,21 @@ int main (int argc, char *argv[])
       //Routing for Router 1
       staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.6.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);
       staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.7.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);
-/*      staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.8.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);
+      staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.8.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);
       staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.9.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);
-      staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.10.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);*/
+      staticRoutingRouter1->AddNetworkRouteTo (Ipv4Address ("10.0.10.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.2"), 1);
 
       //Routing for Router 2
       staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.1.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);
       staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.2.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);
-/*      staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.3.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);
+      staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.3.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);
       staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.4.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);
-      staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.5.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);*/
+      staticRoutingRouter2->AddNetworkRouteTo (Ipv4Address ("10.0.5.0"), Ipv4Mask ("255.255.255.0"), Ipv4Address ("10.0.0.1"), 1);
 
       std::ostringstream cmd_oss;
 
       //Default route for senders
-      for (uint32_t i = 1; i < 3; i = i + 1)
+      for (uint32_t i = 1; i < 6; i = i + 1)
         {
           cmd_oss.str ("");
           cmd_oss << "route add default via " << (routers.Get (0)->GetObject<Ipv4> ())->GetAddress (i + 1, 0).GetLocal () << " dev sim0";
@@ -391,7 +389,7 @@ int main (int argc, char *argv[])
         }
 
       //Default route for receivers
-      for (uint32_t i = 1; i < 3; i = i + 1)
+      for (uint32_t i = 1; i < 6; i = i + 1)
         {
           cmd_oss.str ("");
           cmd_oss << "route add default via " << (routers.Get (1)->GetObject<Ipv4> ())->GetAddress (i + 1, 0).GetLocal () << " dev sim0";
@@ -424,6 +422,8 @@ int main (int argc, char *argv[])
       Config::SetDefault ("ns3::TcpSocket::InitialCwnd", UintegerValue (10));
       Config::SetDefault ("ns3::TcpSocket::DelAckCount", UintegerValue (delAckCount));
       Config::SetDefault ("ns3::TcpSocket::SegmentSize", UintegerValue (dataSize));
+  Config::SetDefault ("ns3::TcpL4Protocol::RecoveryType",
+                      TypeIdValue (TypeId::LookupByName ("ns3::TcpPrrRecovery")));
       // Config::SetDefault ("ns3::TcpSocketBase::UseEcn", BooleanValue (useEcn));
     }
 
@@ -465,25 +465,25 @@ int main (int argc, char *argv[])
   uint16_t port = 50000;
   InstallPacketSink (rightNodes.Get (0), port, sock_factory, stack);      // A Sink 0 Applications
   InstallPacketSink (rightNodes.Get (1), port, sock_factory, stack);      // B Sink 0 Applications
-  /*InstallPacketSink (rightNodes.Get (2), port, sock_factory, stack);      // C Sink 0 Applications
+  InstallPacketSink (rightNodes.Get (2), port, sock_factory, stack);      // C Sink 0 Applications
   InstallPacketSink (rightNodes.Get (3), port, sock_factory, stack);      // D Sink 0 Applications
-  InstallPacketSink (rightNodes.Get (4), port, sock_factory, stack);      // E Sink 0 Applications*/
+  InstallPacketSink (rightNodes.Get (4), port, sock_factory, stack);      // E Sink 0 Applications
 
 
   if( stack == "linux"){
   InstallBulkSend (leftNodes.Get (0), routerToRightIPAddress [0].GetAddress (1), port, sock_factory);
   InstallBulkSend (leftNodes.Get (1), routerToRightIPAddress [1].GetAddress (1), port, sock_factory);
-/*  InstallBulkSend (leftNodes.Get (2), routerToRightIPAddress [2].GetAddress (1), port, sock_factory);
+  InstallBulkSend (leftNodes.Get (2), routerToRightIPAddress [2].GetAddress (1), port, sock_factory);
   InstallBulkSend (leftNodes.Get (3), routerToRightIPAddress [3].GetAddress (1), port, sock_factory);
-  InstallBulkSend (leftNodes.Get (4), routerToRightIPAddress [4].GetAddress (1), port, sock_factory);*/
+  InstallBulkSend (leftNodes.Get (4), routerToRightIPAddress [4].GetAddress (1), port, sock_factory);
   }
 
   if(stack == "ns3"){
 	  ns3InstallBulkSend (leftNodes.Get (0), routerToRightIPAddress [0].GetAddress (1), port, 2, 0, MakeCallback (&CwndChangeA));
 	  ns3InstallBulkSend (leftNodes.Get (1), routerToRightIPAddress [1].GetAddress (1), port, 3, 0, MakeCallback (&CwndChangeB));
-	 /* ns3InstallBulkSend (leftNodes.Get (2), routerToRightIPAddress [2].GetAddress (1), port, 4, 0, MakeCallback (&CwndChangeC));
+	  ns3InstallBulkSend (leftNodes.Get (2), routerToRightIPAddress [2].GetAddress (1), port, 4, 0, MakeCallback (&CwndChangeC));
 	  ns3InstallBulkSend (leftNodes.Get (3), routerToRightIPAddress [3].GetAddress (1), port, 5, 0, MakeCallback (&CwndChangeD));
-	  ns3InstallBulkSend (leftNodes.Get (4), routerToRightIPAddress [4].GetAddress (1), port, 6, 0, MakeCallback (&CwndChangeE));*/
+	  ns3InstallBulkSend (leftNodes.Get (4), routerToRightIPAddress [4].GetAddress (1), port, 6, 0, MakeCallback (&CwndChangeE));
 
   }
 
