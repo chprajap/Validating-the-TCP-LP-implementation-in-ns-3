@@ -29,7 +29,7 @@ it to those obtained by simulating Linux TCP-LP.
 Follow the steps given below: 
 - git clone https://github.com/crp987654321/Validating-the-TCP-LP-implementation-in-ns-3.git 
 - cd Validating-the-TCP-LP-implementation-in-ns-3.
-- Now follow the instructions given at the end in README.md in this repository.
+- Now follow the instructions given in instruction.txt in this repository.
 - Pull Requests welcome.
 
 **SOFTWARE REQUIREMENTS:**
